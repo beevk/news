@@ -2,10 +2,11 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 
 import news from './modules/news';
+// import { StateInterface } from './types';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+const store = {
   state: {
   },
   mutations: {
@@ -15,4 +16,6 @@ export default new Vuex.Store({
   modules: {
     news,
   },
-});
+};
+
+export default new Vuex.Store(store);
