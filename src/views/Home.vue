@@ -8,7 +8,7 @@
        v-else
        v-for="topic in news"
        :key="`${topic.url}`"
-       @click="onClick(topic.publishedAt, topic.title)"
+       @click="onClick(topic.slug)"
       >
         <NewsCard :newsDetails="topic" />
       </div>
@@ -55,22 +55,11 @@ export default class Home extends Vue {
   //   allNews: 'allNews'
   // });
 
-  // Move this method to SDK later
-  private sluggify = (publishedDate: string, name: string): string => {
-    const trimmedDate = publishedDate.trim().split('T')[0];
-    const title = name.toLowerCase()
-      .replace(/[^a-z0-9 -]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-');
-    // return trimmedDate;
-    return `${trimmedDate}-${title}`;
-  }
-
-  onClick(publishedAt: string, title: string) {
-    const url = this.sluggify(publishedAt, title);
+  onClick(slug: string) {
+    // const url = this.sluggify(publishedAt, title);
     this.$router.push({
       name: 'newsDetails',
-      params: { name: url },
+      params: { name: slug },
     });
   }
 

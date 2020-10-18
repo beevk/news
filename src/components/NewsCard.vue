@@ -50,6 +50,6 @@ export default Vue.extend({
     display: flex;
     align-items: center;
     background-color: #1976d2;
-    color: #fff;
+    color: #fff !important;
   }
 </style>

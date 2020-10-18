@@ -12,6 +12,7 @@ export interface NewsInterface {
   urlToImage: Nullable<string>;
   publishedAt: Nullable<string>;
   content: Nullable<string>;
+  slug?: string;
 }
 
 export interface ActionInterface {
