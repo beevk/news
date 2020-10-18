@@ -1,18 +1,35 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+      <h1>Headlines</h1>
+      <div
+       v-for="topic in allNews"
+       :key="`${topic.url}-${topic.title}`"
+       @click="onClick(topic.publishedAt)"
+      >
+        <p>{{topic.title}}</p>
+      </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
+import { mapGetters } from 'vuex';
+// import Header from '@/components/Header.vue'; // @ is an alias to /src
 
 @Component({
   components: {
-    HelloWorld,
+    // Header,
   },
+  methods: {
+    onClick(url: string) {
+      this.$router.push({
+        name: 'newsDetails',
+        params: { name: url },
+      });
+    },
+  },
+  computed: mapGetters(['allNews']),
 })
 export default class Home extends Vue {}
+
 </script>
