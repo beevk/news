@@ -26,4 +26,5 @@ export interface StateInterface {
   news: NewsInterface[];
   searchQuery: string;
   errorMessage: string;
+  currentPage?: string;
 }

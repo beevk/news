@@ -7,6 +7,7 @@ import news from './modules/news';
 Vue.use(Vuex);
 
 const store = {
+  debug: true,
   state: {
   },
   mutations: {

@@ -43,18 +43,6 @@ export default class Home extends Vue {
   // eslint-disable-next-line
   fetchNews!: () => any
 
-  // computed: mapGetters(['allNews']);
-  // mapActions([fetchNews]);
-  // onClick(url: string) {
-  //   this.$router.push({
-  //     name: 'newsDetails',
-  //     params: { name: url },
-  //   });
-  // };
-  // get mapGetters({
-  //   allNews: 'allNews'
-  // });
-
   onClick(slug: string) {
     // const url = this.sluggify(publishedAt, title);
     this.$router.push({

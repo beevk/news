@@ -11,18 +11,21 @@ const initialState: StateInterface = {
   news: [],
   searchQuery: '',
   errorMessage: '',
+  currentPage: '',
 };
 
-const sluggify = (publishedDate?: string, name?: string): string => {
-  if (!(publishedDate || name)) {
+const sluggify = (article: NewsInterface): string => {
+  const { publishedAt, title } = article;
+  // const sluggify = (publishedDate: string, name: string): string => {
+  if (!(publishedAt || title)) {
     return '';
   }
-  const trimmedDate = publishedDate?.split('T')[0];
-  const title = name?.toLowerCase()
+  const trimmedDate = publishedAt?.split('T')[0];
+  const sluggifiedTitle = title?.toLowerCase()
     .replace(/[^a-z0-9 -]/g, '')
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-');
-  return `${trimmedDate}-${title}`;
+  return `${trimmedDate}-${sluggifiedTitle}`;
 };
 
 const getters = {
@@ -31,7 +34,15 @@ const getters = {
   hasError: (state: StateInterface): boolean => state.hasError,
   errorMessage: (state: StateInterface): string => state.errorMessage,
   // eslint-disable-next-line max-len
-  singleNewsArticle: (state: StateInterface, slug: string): NewsInterface | undefined => state.news.find((article) => article.slug === slug),
+  singleNewsArticle: (state: StateInterface): NewsInterface | undefined => {
+    const currentSlug = state.currentPage;
+    const allNews = state.news;
+    if (!allNews) {
+      return undefined;
+    }
+    const newsArticle = allNews.find((article) => article.slug === currentSlug);
+    return newsArticle;
+  },
 };
 
 const actions = {
@@ -54,9 +65,9 @@ const actions = {
       (article: NewsInterface): NewsInterface => {
         const copy: NewsInterface = { ...article };
         // const { publishedAt, title } = copy;
-        // const slug: string = sluggify(publishedAt, title);
+        const slug: string = sluggify(copy);
         // console.log('SLUG:::', slug, copy);
-        // copy.slug = slug;
+        copy.slug = slug;
         return copy;
       },
     );
@@ -65,6 +76,25 @@ const actions = {
     commit('clearNewsError', false);
     return commit('setLoading', false);
   },
+
+  setCurrentPage(context: ActionInterface, slug: string) {
+    // const { news } = this.$state;
+    // if (!news) {
+    //   context.dispatch('fetchNews');
+    // }
+    const pages: string = localStorage.getItem('visitedPages') || '';
+    let allVisitedPages: string[] = [];
+    if (pages) {
+      allVisitedPages = JSON.parse(pages);
+    }
+    allVisitedPages.push(slug);
+    const allVisitedPagesList = JSON.stringify(allVisitedPages);
+    localStorage.setItem('visitedPages', allVisitedPagesList);
+    context.commit('updateCurrentPage', slug);
+  },
+
+  // fetchNewsArticle({ commit }: ActionInterface) {
+  // },
 };
 
 const mutations = {
@@ -88,6 +118,11 @@ const mutations = {
     state.hasError = hasError;
     state.errorMessage = '';
   },
+
+  updateCurrentPage: (state: StateInterface, currentPage: string) => {
+    state.currentPage = currentPage;
+  },
+
 };
 
 export default {
