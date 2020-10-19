@@ -40,8 +40,8 @@ const getters = {
     if (!allNews) {
       return undefined;
     }
-    const newsArticle = allNews.find((article) => article.slug === currentSlug);
-    return newsArticle;
+    const newsArticle: any = allNews.find((article) => article.slug === currentSlug);
+    return { ...newsArticle };
   },
 };
 

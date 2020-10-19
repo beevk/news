@@ -13,7 +13,6 @@
     </v-app-bar>
 
     <v-main>
-      <Header message="Hello There"/>
       <router-view />
     </v-main>
   </v-app>
@@ -21,14 +20,9 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Header from './components/Header.vue';
 
 export default Vue.extend({
   name: 'App',
-
-  components: {
-    Header,
-  },
 
   data: () => ({
     //

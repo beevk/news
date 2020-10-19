@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+      <Header message="Search box & filter comes here."/>
       <h1>Headlines</h1>
       <p v-if="isLoading">Loading...</p>
       <p v-else-if="hasError">{{errorMessage}}</p>
@@ -20,10 +21,12 @@ import { Component, Vue } from 'vue-property-decorator';
 import { mapGetters, mapActions } from 'vuex';
 // import { State, Action, Getter } from 'vuex-class';
 import NewsCard from '@/components/NewsCard.vue'; // @ is an alias to /src
+import Header from '@/components/Header.vue';
 
 @Component({
   components: {
     NewsCard,
+    Header,
   },
   methods: {
     ...mapActions({
